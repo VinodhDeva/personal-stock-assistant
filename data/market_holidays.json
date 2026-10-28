@@ -1,0 +1,8 @@
+{
+  "_note": "Exchange trading holidays (NSE/BSE). Only fixed-date national holidays are pre-filled. Add the festival holidays from the official NSE holiday circular for the year; this file is not auto-updated.",
+  "holidays": [
+    {"date": "2026-01-26", "name": "Republic Day"},
+    {"date": "2026-10-02", "name": "Gandhi Jayanti"},
+    {"date": "2026-12-25", "name": "Christmas"}
+  ]
+}
