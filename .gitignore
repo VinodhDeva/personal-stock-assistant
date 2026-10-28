@@ -22,3 +22,6 @@ data/uploads/*
 !data/uploads/.gitkeep
 *.log
 .DS_Store
+
+# generated diagrams
+.archify/
