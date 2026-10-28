@@ -1,6 +1,14 @@
 import "@testing-library/jest-dom/vitest";
 import { cleanup } from "@testing-library/react";
+import { MotionGlobalConfig } from "motion/react";
 import { afterEach, vi } from "vitest";
+
+MotionGlobalConfig.skipAnimations = true;
+
+// jsdom has no PointerEvent, so fireEvent.pointerMove would drop clientX/clientY.
+if (!("PointerEvent" in window)) {
+  Object.assign(window, { PointerEvent: class PointerEvent extends MouseEvent {} });
+}
 
 // Canvas charts cannot render in jsdom; the chart library is replaced with no-op stubs.
 vi.mock("lightweight-charts", () => {

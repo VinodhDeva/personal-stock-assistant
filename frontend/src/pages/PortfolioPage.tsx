@@ -4,6 +4,7 @@ import { Link } from "react-router";
 
 import { FreshnessBadge } from "../components/Badges";
 import { Empty, ErrorBox, Loading } from "../components/Status";
+import { Tilt3D } from "../components/Tilt3D";
 import { usePortfolio, useTrades } from "../hooks/queries";
 import { post } from "../services/api";
 import { istTime, money, number } from "../services/format";
@@ -26,30 +27,30 @@ export function PortfolioPage() {
         <>
           <section className="card">
             <dl className="kpis">
-              <div>
+              <Tilt3D>
                 <dt>Equity</dt>
                 <dd>{money(p.data.equity)}</dd>
-              </div>
-              <div>
+              </Tilt3D>
+              <Tilt3D>
                 <dt>Cash</dt>
                 <dd>{money(p.data.cash)}</dd>
-              </div>
-              <div>
+              </Tilt3D>
+              <Tilt3D>
                 <dt>Unrealized P&L</dt>
                 <dd className={p.data.unrealized_pnl >= 0 ? "pos" : "neg"}>{money(p.data.unrealized_pnl)}</dd>
-              </div>
-              <div>
+              </Tilt3D>
+              <Tilt3D>
                 <dt>Realized P&L</dt>
                 <dd className={p.data.realized_pnl >= 0 ? "pos" : "neg"}>{money(p.data.realized_pnl)}</dd>
-              </div>
-              <div>
+              </Tilt3D>
+              <Tilt3D>
                 <dt>Exposure</dt>
                 <dd>{p.data.exposure_pct}%</dd>
-              </div>
-              <div>
+              </Tilt3D>
+              <Tilt3D>
                 <dt>Max drawdown</dt>
                 <dd>{p.data.max_drawdown_pct}%</dd>
-              </div>
+              </Tilt3D>
             </dl>
             <p className="muted small">
               Starting capital {money(p.data.starting_capital)} · fees paid {money(p.data.total_fees)}

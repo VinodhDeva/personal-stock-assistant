@@ -2,6 +2,7 @@ import { Link } from "react-router";
 
 import { SignalBadge } from "../components/Badges";
 import { Empty, ErrorBox, Loading } from "../components/Status";
+import { Tilt3D } from "../components/Tilt3D";
 import { QuoteCells } from "../features/QuoteCells";
 import { useLatestSignals, usePortfolio, useProviders, useRefreshSignals, useWatchlist } from "../hooks/queries";
 import { istTime, money, pct } from "../services/format";
@@ -120,30 +121,30 @@ function PortfolioSummary() {
         <ErrorBox error={p.error} />
       ) : (
         <dl className="kpis">
-          <div>
+          <Tilt3D>
             <dt>Equity</dt>
             <dd>{money(p.data.equity)}</dd>
-          </div>
-          <div>
+          </Tilt3D>
+          <Tilt3D>
             <dt>Cash</dt>
             <dd>{money(p.data.cash)}</dd>
-          </div>
-          <div>
+          </Tilt3D>
+          <Tilt3D>
             <dt>Unrealized P&L</dt>
             <dd className={p.data.unrealized_pnl >= 0 ? "pos" : "neg"}>{money(p.data.unrealized_pnl)}</dd>
-          </div>
-          <div>
+          </Tilt3D>
+          <Tilt3D>
             <dt>Realized P&L</dt>
             <dd className={p.data.realized_pnl >= 0 ? "pos" : "neg"}>{money(p.data.realized_pnl)}</dd>
-          </div>
-          <div>
+          </Tilt3D>
+          <Tilt3D>
             <dt>Exposure</dt>
             <dd>{pct(p.data.exposure_pct).replace("+", "")}</dd>
-          </div>
-          <div>
+          </Tilt3D>
+          <Tilt3D>
             <dt>Open positions</dt>
             <dd>{p.data.positions.length}</dd>
-          </div>
+          </Tilt3D>
         </dl>
       )}
     </section>

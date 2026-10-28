@@ -1,11 +1,12 @@
 import { istTime, money } from "../services/format";
 import type { Signal } from "../types/api";
 import { FreshnessBadge, SignalBadge } from "./Badges";
+import { Tilt3D } from "./Tilt3D";
 
 export function SignalDetails({ signal }: { signal: Signal }) {
   const r = signal.risk ?? {};
   return (
-    <article className="card signal" aria-label={`${signal.signal_type} signal for ${signal.symbol}`}>
+    <Tilt3D as="article" className="card signal" maxTilt={2.5} aria-label={`${signal.signal_type} signal for ${signal.symbol}`}>
       <header className="row between">
         <div className="row gap">
           <SignalBadge type={signal.signal_type} />
@@ -68,6 +69,6 @@ export function SignalDetails({ signal }: { signal: Signal }) {
         </section>
       )}
       <p className="disclaimer">Educational rule output, not investment advice. A signal does not mean the price will move.</p>
-    </article>
+    </Tilt3D>
   );
 }

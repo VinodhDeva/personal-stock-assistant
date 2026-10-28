@@ -6,6 +6,7 @@ import { FreshnessBadge } from "../components/Badges";
 import { MacdChart, PriceChart, RsiChart } from "../components/Charts";
 import { SignalDetails } from "../components/SignalDetails";
 import { Empty, ErrorBox, Loading } from "../components/Status";
+import { Tilt3D } from "../components/Tilt3D";
 import { useAlerts, useBacktest, useHistory, useIndicators, useQuote, useSignals } from "../hooks/queries";
 import { del, post } from "../services/api";
 import { istTime, money, number, pct } from "../services/format";
@@ -128,10 +129,10 @@ function LatestIndicators({ latest }: { latest: NonNullable<ReturnType<typeof us
   return (
     <dl className="kpis small-kpis" aria-label="Latest indicator values">
       {rows.map(([k, v]) => (
-        <div key={k}>
+        <Tilt3D key={k} maxTilt={14}>
           <dt>{k}</dt>
           <dd>{number(v)}</dd>
-        </div>
+        </Tilt3D>
       ))}
     </dl>
   );
@@ -219,30 +220,30 @@ function BacktestSection({ symbol }: { symbol: string }) {
       {bt.data && (
         <>
           <dl className="kpis">
-            <div>
+            <Tilt3D>
               <dt>Strategy return</dt>
               <dd className={bt.data.total_return_pct >= 0 ? "pos" : "neg"}>{pct(bt.data.total_return_pct)}</dd>
-            </div>
-            <div>
+            </Tilt3D>
+            <Tilt3D>
               <dt>Buy & hold</dt>
               <dd>{pct(bt.data.buy_and_hold_return_pct)}</dd>
-            </div>
-            <div>
+            </Tilt3D>
+            <Tilt3D>
               <dt>Max drawdown</dt>
               <dd>{pct(-bt.data.max_drawdown_pct)}</dd>
-            </div>
-            <div>
+            </Tilt3D>
+            <Tilt3D>
               <dt>Trades</dt>
               <dd>{bt.data.num_trades}</dd>
-            </div>
-            <div>
+            </Tilt3D>
+            <Tilt3D>
               <dt>Win rate</dt>
               <dd>{bt.data.win_rate_pct == null ? "—" : `${bt.data.win_rate_pct}%`}</dd>
-            </div>
-            <div>
+            </Tilt3D>
+            <Tilt3D>
               <dt>Costs paid</dt>
               <dd>{money(bt.data.total_costs)}</dd>
-            </div>
+            </Tilt3D>
           </dl>
           <p className="muted small">
             {bt.data.bars} bars via {bt.data.provider} ({bt.data.freshness}). Signals on completed bar close, filled next open,{" "}
