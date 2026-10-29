@@ -1,11 +1,13 @@
+import { motion } from "motion/react";
 import { Link } from "react-router";
 
+import { AnimatedNumber } from "../components/AnimatedNumber";
 import { SignalBadge } from "../components/Badges";
 import { Empty, ErrorBox, Loading } from "../components/Status";
 import { Tilt3D } from "../components/Tilt3D";
 import { QuoteCells } from "../features/QuoteCells";
 import { useLatestSignals, usePortfolio, useProviders, useRefreshSignals, useWatchlist } from "../hooks/queries";
-import { istTime, money, pct } from "../services/format";
+import { istTime, money } from "../services/format";
 
 export function DashboardPage() {
   const watchlist = useWatchlist();
@@ -50,10 +52,15 @@ export function DashboardPage() {
                 </tr>
               </thead>
               <tbody>
-                {watchlist.data.map((w) => {
+                {watchlist.data.map((w, i) => {
                   const s = bySymbol.get(w.symbol);
                   return (
-                    <tr key={w.symbol}>
+                    <motion.tr
+                      key={w.symbol}
+                      initial={{ opacity: 0, x: -12 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ type: "spring", bounce: 0.2, duration: 0.5, delay: i * 0.06 }}
+                    >
                       <th scope="row">
                         <Link to={`/stocks/${w.symbol}`}>{w.symbol}</Link>
                         <div className="muted small">
@@ -71,7 +78,7 @@ export function DashboardPage() {
                           <span className="muted">Not evaluated yet</span>
                         )}
                       </td>
-                    </tr>
+                    </motion.tr>
                   );
                 })}
               </tbody>
@@ -123,27 +130,37 @@ function PortfolioSummary() {
         <dl className="kpis">
           <Tilt3D>
             <dt>Equity</dt>
-            <dd>{money(p.data.equity)}</dd>
+            <dd>
+              <AnimatedNumber from={0} value={p.data.equity} format={money} />
+            </dd>
           </Tilt3D>
           <Tilt3D>
             <dt>Cash</dt>
-            <dd>{money(p.data.cash)}</dd>
+            <dd>
+              <AnimatedNumber from={0} value={p.data.cash} format={money} />
+            </dd>
           </Tilt3D>
           <Tilt3D>
             <dt>Unrealized P&L</dt>
-            <dd className={p.data.unrealized_pnl >= 0 ? "pos" : "neg"}>{money(p.data.unrealized_pnl)}</dd>
+            <dd className={p.data.unrealized_pnl >= 0 ? "pos" : "neg"}><AnimatedNumber from={0} value={p.data.unrealized_pnl} format={money} />
+            </dd>
           </Tilt3D>
           <Tilt3D>
             <dt>Realized P&L</dt>
-            <dd className={p.data.realized_pnl >= 0 ? "pos" : "neg"}>{money(p.data.realized_pnl)}</dd>
+            <dd className={p.data.realized_pnl >= 0 ? "pos" : "neg"}><AnimatedNumber from={0} value={p.data.realized_pnl} format={money} />
+            </dd>
           </Tilt3D>
           <Tilt3D>
             <dt>Exposure</dt>
-            <dd>{pct(p.data.exposure_pct).replace("+", "")}</dd>
+            <dd>
+              <AnimatedNumber from={0} value={p.data.exposure_pct} format={(v) => `${v.toFixed(2)}%`} />
+            </dd>
           </Tilt3D>
           <Tilt3D>
             <dt>Open positions</dt>
-            <dd>{p.data.positions.length}</dd>
+            <dd>
+              <AnimatedNumber from={0} value={p.data.positions.length} format={(v) => String(Math.round(v))} />
+            </dd>
           </Tilt3D>
         </dl>
       )}

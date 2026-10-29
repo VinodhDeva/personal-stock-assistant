@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { MotionConfig } from "motion/react";
 import { BrowserRouter, NavLink, Route, Routes } from "react-router";
 
 import { AssistantPage } from "../pages/AssistantPage";
@@ -59,9 +60,12 @@ export function Shell() {
 export function App({ client = makeQueryClient() }: { client?: QueryClient }) {
   return (
     <QueryClientProvider client={client}>
-      <BrowserRouter>
+      {/* Honour the OS "reduce motion" setting: transforms are dropped, opacity/colour fades remain. */}
+      <MotionConfig reducedMotion="user">
+        <BrowserRouter>
         <Shell />
-      </BrowserRouter>
+        </BrowserRouter>
+      </MotionConfig>
     </QueryClientProvider>
   );
 }

@@ -184,3 +184,6 @@ button:disabled { opacity: 0.55; cursor: progress; }
 .tilt > dt { transform: translateZ(14px); }
 .tilt-glare { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity 0.25s; }
 .tilt:hover .tilt-glare { opacity: 1; }
+
+/* Price change flash (features/QuoteCells.tsx) */
+.flash { display: inline-block; padding: 0.05rem 0.3rem; margin: -0.05rem -0.3rem; border-radius: 6px; }
